@@ -1,17 +1,21 @@
-/* Rust Blackjack Casino Terminal Stylesheet */
+/* Rust Blackjack Casino Terminal Stylesheet - Final Ultra Polish */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Roboto:wght@400;700;900&display=swap');
 
 :root {
-  --rust-bg: #100d0b;
+  --rust-bg: #0d0b09;
   --rust-accent-red: #cd412b;
   --rust-accent-green: #5a7d2a;
   --rust-crt-green: #38f538;
-  --rust-crt-bg: #071507;
-  --rust-panel-bg: rgba(30, 26, 22, 0.92);
+  --rust-crt-bg: #051105;
+  --rust-panel-bg: rgba(26, 22, 18, 0.96);
   --rust-border: #4a3e35;
+  --rust-border-dark: #241d18;
   --rust-text-gold: #f2c94c;
   --rust-text-light: #e2dcd5;
   --card-width: 105px;
   --card-height: 150px;
+  --font-mono: 'Share Tech Mono', 'Courier New', Courier, monospace;
 }
 
 * {
@@ -35,17 +39,27 @@ body, html {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 20%, rgba(205, 65, 43, 0.18) 0%, transparent 60%),
-    radial-gradient(circle at 50% 80%, rgba(30, 20, 15, 0.8) 0%, rgba(10, 8, 6, 1) 100%),
-    repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 4px);
+    radial-gradient(circle at 50% 30%, rgba(205, 65, 43, 0.22) 0%, transparent 65%),
+    radial-gradient(circle at 50% 85%, rgba(45, 30, 20, 0.8) 0%, rgba(8, 6, 4, 1) 100%),
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0px, rgba(0,0,0,0.18) 1px, transparent 1px, transparent 3px);
   pointer-events: none;
   z-index: 1;
+}
+
+/* Industrial rust noise background pattern */
+.rust-environment::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.6;
 }
 
 .vignette {
   position: absolute;
   inset: 0;
-  box-shadow: inset 0 0 120px rgba(0,0,0,0.9);
+  box-shadow: inset 0 0 140px rgba(0,0,0,0.92);
 }
 
 .red-alarm-light {
@@ -53,45 +67,45 @@ body, html {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 300px;
-  height: 150px;
-  background: radial-gradient(ellipse at top, rgba(255, 30, 0, 0.25) 0%, transparent 70%);
-  filter: blur(20px);
+  width: 400px;
+  height: 180px;
+  background: radial-gradient(ellipse at top, rgba(255, 30, 0, 0.3) 0%, transparent 75%);
+  filter: blur(25px);
   animation: pulse-red 4s ease-in-out infinite alternate;
 }
 
 @keyframes pulse-red {
-  0% { opacity: 0.5; }
-  100% { opacity: 1.0; }
+  0% { opacity: 0.4; }
+  100% { opacity: 0.95; }
 }
 
 .neon-sign {
   position: absolute;
-  top: 12px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  font-family: monospace, sans-serif;
+  font-family: var(--font-mono);
   font-weight: 900;
-  font-size: 1.8rem;
-  letter-spacing: 6px;
+  font-size: 2rem;
+  letter-spacing: 8px;
   color: #ff3322;
-  text-shadow: 0 0 8px #ff2200, 0 0 20px #ff0000;
-  opacity: 0.85;
+  text-shadow: 0 0 8px #ff2200, 0 0 22px #ff0000;
+  opacity: 0.88;
 }
 
 /* Dust particles animation */
 .dust-particles {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.3;
-  animation: floatDust 20s linear infinite;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.35;
+  animation: floatDust 25s linear infinite;
 }
 
 @keyframes floatDust {
   from { background-position: 0 0; }
-  to { background-position: 40px 80px; }
+  to { background-position: 50px 100px; }
 }
 
 /* --- Main Menu Overlay --- */
@@ -102,63 +116,67 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(12, 10, 8, 0.92);
-  backdrop-filter: blur(6px);
+  background: rgba(10, 8, 6, 0.94);
+  backdrop-filter: blur(8px);
 }
 
 .menu-card {
-  width: 90%;
-  max-width: 480px;
+  width: 92%;
+  max-width: 520px;
   background: var(--rust-panel-bg);
   border: 2px solid var(--rust-border);
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.5);
-  padding: 30px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0, 0, 0, 0.6);
+  padding: 24px;
   border-radius: 4px;
+  max-height: 95vh;
+  overflow-y: auto;
 }
 
 .rust-logo-header {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .rust-logo-header h1 {
   font-size: 1.8rem;
   letter-spacing: 3px;
   color: #f0e6df;
-  margin-top: 8px;
+  margin-top: 4px;
+  font-family: var(--font-mono);
   text-shadow: 2px 2px 0px #000;
 }
 
 .rust-logo-header .subtitle {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   letter-spacing: 2px;
   color: var(--rust-accent-red);
   font-weight: bold;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .form-group label {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   letter-spacing: 1.5px;
   color: #a0958d;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-weight: bold;
 }
 
 .form-group input[type="text"] {
   width: 100%;
-  padding: 12px 14px;
-  background: rgba(10, 8, 6, 0.8);
+  padding: 10px 12px;
+  background: rgba(8, 6, 4, 0.85);
   border: 1px solid var(--rust-border);
   color: var(--rust-text-light);
-  font-size: 1rem;
+  font-size: 0.95rem;
   outline: none;
   border-radius: 2px;
   transition: border-color 0.2s;
+  font-family: var(--font-mono);
 }
 
 .form-group input[type="text"]:focus {
@@ -168,43 +186,183 @@ body, html {
 .difficulty-options {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .diff-btn {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  background: rgba(18, 15, 12, 0.7);
+  background: rgba(18, 15, 12, 0.8);
   border: 1px solid var(--rust-border);
-  padding: 10px 14px;
+  padding: 8px 12px;
   cursor: pointer;
   border-radius: 3px;
   transition: all 0.2s;
 }
 
 .diff-btn:hover {
-  background: rgba(45, 38, 32, 0.8);
+  background: rgba(45, 38, 32, 0.9);
   border-color: #7a6859;
 }
 
 .diff-btn input[type="radio"] {
   accent-color: var(--rust-accent-red);
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
 .diff-title {
   display: block;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #e8ded6;
 }
 
 .diff-desc {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #8c827a;
+  margin-top: 1px;
+}
+
+/* --- CARD GAME STORAGE (Rust Buy-In Panel) --- */
+.card-game-storage-panel {
+  background: rgba(14, 12, 10, 0.9);
+  border: 1px solid #3d332a;
+  padding: 14px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+}
+
+.storage-header {
+  font-family: var(--font-mono);
+  font-weight: 900;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  color: #d1c5b8;
+  border-bottom: 1px solid #332b23;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+}
+
+.storage-sub {
+  font-size: 0.7rem;
+  color: #80766d;
+  margin-bottom: 12px;
+}
+
+.your-stack-box {
+  display: flex;
+  gap: 12px;
+  background: rgba(22, 18, 14, 0.8);
+  border: 1px solid #2e261f;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.stack-icon-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  background: #110d0b;
+  border: 1px solid #382e25;
+  border-radius: 3px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.scrap-stack-svg {
+  width: 48px;
+  height: 48px;
+}
+
+.stack-badge-val {
+  font-size: 0.65rem;
+  font-weight: bold;
+  color: var(--rust-text-gold);
+  font-family: var(--font-mono);
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+}
+
+.stack-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stack-title {
+  font-weight: 900;
+  font-size: 1rem;
+  color: #f0e6df;
+}
+
+.stack-note {
+  font-size: 0.65rem;
+  color: #8a8075;
+  line-height: 1.2;
+}
+
+.stack-min {
+  font-size: 0.7rem;
+  color: #b5a898;
   margin-top: 2px;
+}
+
+.buyin-controls {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.buyin-controls input[type="range"] {
+  width: 100%;
+  accent-color: var(--rust-accent-red);
+  cursor: pointer;
+}
+
+.buyin-input-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.buyin-input-row input[type="number"] {
+  width: 90px;
+  background: #080605;
+  border: 1px solid var(--rust-border);
+  color: var(--rust-text-gold);
+  font-weight: bold;
+  font-size: 0.95rem;
+  font-family: var(--font-mono);
+  padding: 4px 6px;
+  text-align: center;
+  border-radius: 2px;
+}
+
+.stack-quick-btn {
+  background: #2b231c;
+  border: 1px solid #473a2e;
+  color: #c4b6a5;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.15s;
+}
+
+.stack-quick-btn:hover {
+  background: #403429;
+  color: #fff;
+  border-color: var(--rust-accent-red);
 }
 
 /* --- Rust Button Styling --- */
@@ -217,7 +375,7 @@ body, html {
   color: #ffffff;
   font-weight: 900;
   letter-spacing: 2px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   cursor: pointer;
   text-transform: uppercase;
   text-shadow: 1px 1px 2px #000;
@@ -279,7 +437,7 @@ body, html {
 /* --- HUD Left Panel (Player & Balance) --- */
 .rust-hud-panel {
   position: absolute;
-  top: 60px;
+  top: 55px;
   left: 20px;
   display: flex;
   align-items: center;
@@ -290,11 +448,11 @@ body, html {
 .player-badge {
   display: flex;
   align-items: center;
-  background: rgba(68, 86, 38, 0.92);
+  background: rgba(58, 76, 28, 0.94);
   border: 1px solid #739441;
   border-radius: 2px;
   padding: 6px 12px 6px 6px;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.7);
   min-width: 180px;
 }
 
@@ -321,6 +479,7 @@ body, html {
   font-weight: 900;
   font-size: 0.95rem;
   color: #ffffff;
+  font-family: var(--font-mono);
   letter-spacing: 0.5px;
 }
 
@@ -328,6 +487,7 @@ body, html {
   font-size: 0.75rem;
   color: #d1e2b8;
   font-weight: bold;
+  font-family: var(--font-mono);
 }
 
 .nickname-value {
@@ -352,11 +512,12 @@ body, html {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #1c1c1c;
-  border: 2px solid #333;
+  background: #161616;
+  border: 2px solid #3d3731;
   color: #ffffff;
   font-size: 1.3rem;
   font-weight: 900;
+  font-family: var(--font-mono);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -365,7 +526,7 @@ body, html {
 
 .dealer-score-badge-container {
   position: absolute;
-  top: 60px;
+  top: 55px;
   left: 280px;
   display: flex;
   flex-direction: column;
@@ -382,6 +543,7 @@ body, html {
   background: rgba(0,0,0,0.6);
   padding: 1px 6px;
   border-radius: 2px;
+  font-family: var(--font-mono);
 }
 
 /* --- Cabinet & Retro Terminals --- */
@@ -390,7 +552,7 @@ body, html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 15px;
   position: relative;
   width: 100%;
   max-width: 650px;
@@ -406,9 +568,9 @@ body, html {
 
 .crt-bezel {
   position: relative;
-  background: radial-gradient(circle at 30% 30%, #3d3b37 0%, #1f1d1a 100%);
-  border: 4px solid #141210;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 10px 25px rgba(0,0,0,0.9);
+  background: radial-gradient(circle at 30% 30%, #3a3834 0%, #1a1815 100%);
+  border: 4px solid #110f0d;
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.9), 0 12px 28px rgba(0,0,0,0.95);
   padding: 18px 22px 14px 22px;
   border-radius: 12px;
   width: 280px;
@@ -418,7 +580,7 @@ body, html {
   position: absolute;
   font-size: 0.55rem;
   color: #736c63;
-  font-family: monospace;
+  font-family: var(--font-mono);
 }
 
 .bezel-text.top-left { top: 6px; left: 14px; }
@@ -456,28 +618,30 @@ body, html {
   clip-path: polygon(0 0, 100% 0, 60% 50%, 100% 100%, 0 100%, 40% 50%);
 }
 
-/* CRT Screen Surface */
+/* CRT Screen Surface with Realistic Curved CRT Vignette */
 .crt-screen {
   position: relative;
   width: 100%;
   height: 130px;
   background-color: var(--rust-crt-bg);
-  border-radius: 15px / 10px;
-  border: 3px solid #12100e;
-  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.95);
+  border-radius: 16px / 12px;
+  border: 3px solid #0e0c0a;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.98), 0 0 10px rgba(56, 245, 56, 0.15);
   overflow: hidden;
   padding: 8px;
 }
 
-/* CRT Scanlines & Screen Effects */
+/* CRT Scanlines & Screen Glow Effects */
 .scanlines {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%,
-    rgba(0, 0, 0, 0.45) 50%
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.5) 0px,
+    rgba(0, 0, 0, 0.5) 1px,
+    transparent 1px,
+    transparent 3px
   );
-  background-size: 100% 4px;
   pointer-events: none;
   z-index: 5;
 }
@@ -485,16 +649,24 @@ body, html {
 .crt-flicker {
   position: absolute;
   inset: 0;
-  background: rgba(56, 245, 56, 0.03);
+  background: rgba(56, 245, 56, 0.04);
   pointer-events: none;
   z-index: 6;
-  animation: crtFlicker 0.15s infinite;
+  animation: crtFlicker 0.12s infinite;
+}
+
+.crt-glow-overlay {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 35px rgba(56, 245, 56, 0.2);
+  pointer-events: none;
+  z-index: 7;
 }
 
 @keyframes crtFlicker {
-  0% { opacity: 0.8; }
-  50% { opacity: 1; }
-  100% { opacity: 0.9; }
+  0% { opacity: 0.75; }
+  50% { opacity: 1.0; }
+  100% { opacity: 0.85; }
 }
 
 .screen-content {
@@ -505,14 +677,14 @@ body, html {
   flex-direction: column;
   justify-content: space-between;
   color: var(--rust-crt-green);
-  font-family: 'Courier New', Courier, monospace;
-  text-shadow: 0 0 5px rgba(56, 245, 56, 0.8);
+  font-family: var(--font-mono);
+  text-shadow: 0 0 6px rgba(56, 245, 56, 0.85);
 }
 
 .crt-header {
   display: flex;
   justify-content: space-between;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: bold;
   border-bottom: 1px dashed rgba(56, 245, 56, 0.4);
   padding-bottom: 2px;
@@ -535,14 +707,15 @@ body, html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: bold;
   background: rgba(56, 245, 56, 0.08);
+  box-shadow: 0 0 5px rgba(56, 245, 56, 0.3);
 }
 
 .crt-status-msg {
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 1px;
 }
 
@@ -562,14 +735,14 @@ body, html {
 }
 
 .keypad {
-  background: #25221e;
-  border: 1px solid #3d3731;
+  background: #231f1b;
+  border: 1px solid #3b332b;
   padding: 4px 8px;
   border-radius: 3px;
 }
 
 .screen-mini {
-  font-family: monospace;
+  font-family: var(--font-mono);
   font-size: 0.55rem;
   color: var(--rust-crt-green);
   background: #000;
@@ -583,14 +756,14 @@ body, html {
 
 .term-btn {
   font-size: 0.55rem;
-  background: #3b352e;
+  background: #38312a;
   color: #ccc;
   padding: 2px 6px;
   border-radius: 2px;
   border-bottom: 2px solid #1a1714;
 }
 
-/* --- Physical Cards Display --- */
+/* --- Physical Cards Display & Weathered Paper Styling --- */
 .physical-cards-area {
   position: absolute;
   display: flex;
@@ -609,14 +782,14 @@ body, html {
   transform: translateX(-50%);
 }
 
-/* Playing Card Component */
+/* Playing Card Component with Dirt / Wear Texture */
 .rust-card {
   width: var(--card-width);
   height: var(--card-height);
-  background: #fdfbf7;
+  background: #fbf8f0;
   border-radius: 6px;
-  box-shadow: -3px 4px 12px rgba(0,0,0,0.7), inset 0 0 10px rgba(180, 160, 130, 0.5);
-  border: 1px solid #dcd4c8;
+  box-shadow: -4px 6px 14px rgba(0,0,0,0.85), inset 0 0 12px rgba(160, 140, 110, 0.6);
+  border: 1px solid #c8beaf;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -624,6 +797,7 @@ body, html {
   padding: 6px;
   transition: transform 0.3s ease, box-shadow 0.3s;
   animation: dealCard 0.35s ease-out;
+  filter: contrast(0.97) sepia(0.12);
 }
 
 @keyframes dealCard {
@@ -652,9 +826,9 @@ body, html {
   inset: 0;
   border-radius: 6px;
   background:
-    radial-gradient(circle at 10% 20%, rgba(120, 90, 50, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(80, 60, 30, 0.12) 0%, transparent 50%),
-    repeating-linear-gradient(45deg, transparent 0, transparent 10px, rgba(0,0,0,0.02) 11px);
+    radial-gradient(circle at 12% 18%, rgba(100, 75, 40, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 88% 82%, rgba(70, 50, 25, 0.16) 0%, transparent 50%),
+    repeating-linear-gradient(45deg, transparent 0, transparent 8px, rgba(0,0,0,0.025) 9px);
   pointer-events: none;
 }
 
@@ -666,13 +840,13 @@ body, html {
 }
 
 .card-rank {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 900;
   font-family: 'Impact', 'Arial Black', sans-serif;
 }
 
 .card-suit {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
 .card-center-art {
@@ -712,14 +886,15 @@ body, html {
 .rust-card.card-back {
   background: linear-gradient(135deg, #a63b28 0%, #611e12 100%);
   border: 1px solid #7c2d1e;
-  box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.7);
   padding: 8px;
+  filter: none;
 }
 
 .card-back-inner {
   width: 100%;
   height: 100%;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.22);
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -728,8 +903,8 @@ body, html {
     45deg,
     transparent,
     transparent 6px,
-    rgba(0, 0, 0, 0.1) 6px,
-    rgba(0, 0, 0, 0.1) 12px
+    rgba(0, 0, 0, 0.12) 6px,
+    rgba(0, 0, 0, 0.12) 12px
   );
 }
 
@@ -746,24 +921,24 @@ body, html {
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(90, 125, 42, 0.94);
+  background: rgba(90, 125, 42, 0.95);
   border: 2px solid #7da63d;
   color: #ffffff;
   padding: 16px 40px;
   border-radius: 3px;
   text-align: center;
   z-index: 50;
-  box-shadow: 0 0 30px rgba(0,0,0,0.9);
+  box-shadow: 0 0 35px rgba(0,0,0,0.92);
   animation: bannerPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .result-banner.loss {
-  background: rgba(162, 48, 30, 0.94);
+  background: rgba(162, 48, 30, 0.95);
   border-color: #d34832;
 }
 
 .result-banner.push {
-  background: rgba(140, 110, 30, 0.94);
+  background: rgba(140, 110, 30, 0.95);
   border-color: #d4a72c;
 }
 
@@ -776,6 +951,7 @@ body, html {
   font-size: 1.6rem;
   font-weight: 900;
   letter-spacing: 2px;
+  font-family: var(--font-mono);
   text-shadow: 2px 2px 4px #000;
 }
 
@@ -785,16 +961,16 @@ body, html {
   font-weight: bold;
 }
 
-/* --- Controls Panel (Bottom) --- */
+/* --- Action & Betting Panel (Rust Dark Rectangular Buttons) --- */
 .control-panel {
   width: 100%;
   max-width: 600px;
-  background: rgba(22, 18, 15, 0.95);
+  background: rgba(20, 16, 13, 0.96);
   border: 1px solid var(--rust-border);
   padding: 12px 18px;
   border-radius: 4px;
   z-index: 30;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.8);
+  box-shadow: 0 -4px 25px rgba(0,0,0,0.85);
 }
 
 .control-group {
@@ -811,30 +987,34 @@ body, html {
 }
 
 .chip-btn {
-  background: #2e2823;
-  border: 1px solid #52473f;
-  color: #ded6ce;
+  background: rgba(38, 32, 26, 0.85);
+  border: 1px solid #4a3e35;
+  color: #dcd2c8;
   font-weight: bold;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   padding: 8px 14px;
-  border-radius: 3px;
+  border-radius: 2px;
   cursor: pointer;
   transition: all 0.15s;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
 }
 
 .chip-btn:hover {
-  background: #453c35;
+  background: rgba(65, 54, 44, 0.95);
   color: #fff;
   border-color: var(--rust-accent-red);
+  box-shadow: 0 0 8px rgba(205, 65, 43, 0.4);
 }
 
 .chip-btn.max-btn {
-  background: #4a1f18;
+  background: rgba(74, 31, 24, 0.9);
   border-color: #822e20;
   color: #ff9d8c;
 }
 
 .chip-btn.clear-btn {
-  background: #25201c;
+  background: rgba(35, 30, 26, 0.9);
   border-color: #3b332d;
   color: #999;
 }
@@ -858,14 +1038,16 @@ body, html {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  font-family: var(--font-mono);
 }
 
 .key-hint {
   font-size: 0.65rem;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.5);
   padding: 2px 6px;
   border-radius: 2px;
   border: 1px solid rgba(255,255,255,0.2);
+  font-family: var(--font-mono);
 }
 
 /* --- Survival HUD (Bottom Right) --- */
@@ -885,6 +1067,7 @@ body, html {
   color: #80766d;
   text-align: right;
   line-height: 1.4;
+  font-family: var(--font-mono);
 }
 
 .key-hints .key {
@@ -908,6 +1091,7 @@ body, html {
   padding: 3px 8px;
   font-size: 0.75rem;
   font-weight: bold;
+  font-family: var(--font-mono);
   border-radius: 2px;
   color: #fff;
   justify-content: space-between;

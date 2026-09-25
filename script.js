@@ -1,4 +1,4 @@
-/* Rust Blackjack Casino Terminal Engine */
+/* Rust Blackjack Casino Terminal Engine - Final Polish */
 
 // Sound Synthesizer using Web Audio API
 class RustAudio {
@@ -21,14 +21,29 @@ class RustAudio {
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     osc.type = 'square';
-    osc.frequency.setValueAtTime(400, this.ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(80, this.ctx.currentTime + 0.05);
-    gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+    osc.frequency.setValueAtTime(450, this.ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(90, this.ctx.currentTime + 0.05);
+    gain.gain.setValueAtTime(0.18, this.ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.05);
     osc.connect(gain);
     gain.connect(this.ctx.destination);
     osc.start();
     osc.stop(this.ctx.currentTime + 0.05);
+  }
+
+  playChipTick() {
+    if (!this.ctx) return;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(800, this.ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(200, this.ctx.currentTime + 0.03);
+    gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.03);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start();
+    osc.stop(this.ctx.currentTime + 0.03);
   }
 
   playCardDeal() {
@@ -43,11 +58,11 @@ class RustAudio {
     noise.buffer = buffer;
     const filter = this.ctx.createBiquadFilter();
     filter.type = 'bandpass';
-    filter.frequency.setValueAtTime(1000, this.ctx.currentTime);
+    filter.frequency.setValueAtTime(1100, this.ctx.currentTime);
     filter.Q.setValueAtTime(3, this.ctx.currentTime);
 
     const gain = this.ctx.createGain();
-    gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+    gain.gain.setValueAtTime(0.22, this.ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
 
     noise.connect(filter);
@@ -192,7 +207,7 @@ const RANKS = [
 // Main Game Controller State
 class RustBlackjackGame {
   constructor() {
-    this.scrap = parseInt(localStorage.getItem('rust_bj_scrap')) || 1000;
+    this.scrap = parseInt(localStorage.getItem('rust_bj_scrap')) || 500;
     this.nickname = localStorage.getItem('rust_bj_nickname') || 'Survivor';
     this.difficulty = localStorage.getItem('rust_bj_diff') || 'medium';
     this.currentBet = 0;
@@ -203,6 +218,7 @@ class RustBlackjackGame {
 
     this.initDOM();
     this.bindEvents();
+    this.initBuyinControls();
     this.updateHUD();
   }
 
@@ -213,6 +229,10 @@ class RustBlackjackGame {
       nicknameInput: document.getElementById('nicknameInput'),
       startGameBtn: document.getElementById('startGameBtn'),
       btnOpenMenu: document.getElementById('btnOpenMenu'),
+
+      buyinSlider: document.getElementById('buyinSlider'),
+      buyinInput: document.getElementById('buyinInput'),
+      stackBadgeVal: document.getElementById('stackBadgeVal'),
 
       hudScrap: document.getElementById('hudScrap'),
       hudBet: document.getElementById('hudBet'),
@@ -257,6 +277,39 @@ class RustBlackjackGame {
     if (currentDiffRadio) currentDiffRadio.checked = true;
   }
 
+  initBuyinControls() {
+    const updateBuyin = (val) => {
+      let num = parseInt(val) || 5;
+      num = Math.max(5, num);
+      this.elements.buyinInput.value = num;
+      this.elements.buyinSlider.value = Math.min(num, 5000);
+      this.elements.stackBadgeVal.textContent = `x${num}`;
+    };
+
+    this.elements.buyinSlider.value = this.scrap;
+    updateBuyin(this.scrap);
+
+    this.elements.buyinSlider.addEventListener('input', (e) => {
+      audio.playChipTick();
+      updateBuyin(e.target.value);
+    });
+
+    this.elements.buyinInput.addEventListener('input', (e) => {
+      audio.playChipTick();
+      updateBuyin(e.target.value);
+    });
+
+    document.querySelectorAll('.stack-quick-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        audio.init();
+        audio.playChipTick();
+        const delta = parseInt(e.target.getAttribute('data-add'));
+        const current = parseInt(this.elements.buyinInput.value) || 500;
+        updateBuyin(current + delta);
+      });
+    });
+  }
+
   bindEvents() {
     // Menu start
     this.elements.startGameBtn.addEventListener('click', () => {
@@ -274,7 +327,7 @@ class RustBlackjackGame {
     document.querySelectorAll('.chip-btn[data-amount]').forEach(btn => {
       btn.addEventListener('click', (e) => {
         audio.init();
-        audio.playClick();
+        audio.playChipTick();
         const amt = parseInt(e.target.getAttribute('data-amount'));
         this.addBet(amt);
       });
@@ -282,7 +335,7 @@ class RustBlackjackGame {
 
     this.elements.btnMaxBet.addEventListener('click', () => {
       audio.init();
-      audio.playClick();
+      audio.playChipTick();
       this.setBet(this.scrap);
     });
 
@@ -356,13 +409,17 @@ class RustBlackjackGame {
     const selectedDiff = document.querySelector('input[name="difficulty"]:checked');
     if (selectedDiff) this.difficulty = selectedDiff.value;
 
+    const buyinVal = Math.max(5, parseInt(this.elements.buyinInput.value) || 500);
+    this.scrap = buyinVal;
+
     localStorage.setItem('rust_bj_nickname', this.nickname);
     localStorage.setItem('rust_bj_diff', this.difficulty);
+    localStorage.setItem('rust_bj_scrap', this.scrap);
 
     this.elements.mainMenu.classList.add('hidden');
     this.elements.gameStage.classList.remove('hidden');
 
-    this.updateHUD();
+    this.resetRound(true);
   }
 
   updateHUD() {
@@ -431,7 +488,6 @@ class RustBlackjackGame {
         }
       } else if (this.difficulty === 'hard') {
         // Hard mode: Rig dealer to get total 20 or 21 when drawing
-        const playerScore = this.calculateHandValue(this.playerHand);
         const neededFor20Or21 = [20 - dealerScore, 21 - dealerScore];
 
         if (dealerScore >= 10 && dealerScore <= 16 && Math.random() < 0.6) {

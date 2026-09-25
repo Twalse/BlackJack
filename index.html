@@ -58,7 +58,43 @@
         </div>
       </div>
 
-      <button id="startGameBtn" class="rust-btn primary-btn">START TERMINAL</button>
+      <!-- CARD GAME STORAGE (Rust Buy-in Mechanics) -->
+      <div class="card-game-storage-panel">
+        <div class="storage-header">CARD GAME STORAGE</div>
+        <div class="storage-sub">Buy in by depositing scrap stack for this session.</div>
+
+        <div class="your-stack-box">
+          <div class="stack-icon-area">
+            <!-- Scrap icon SVG -->
+            <svg class="scrap-stack-svg" viewBox="0 0 64 64">
+              <path d="M12 40 L52 40 L48 56 L16 56 Z" fill="#6d5d4d" stroke="#33281e" stroke-width="2"/>
+              <path d="M10 28 L54 28 L50 38 L14 38 Z" fill="#8c7865" stroke="#33281e" stroke-width="2"/>
+              <circle cx="24" cy="20" r="10" fill="#a8927b" stroke="#3d3226" stroke-width="2"/>
+              <rect x="36" y="12" width="16" height="16" fill="#7d6a58" stroke="#2b221a" stroke-width="2" transform="rotate(15 44 20)"/>
+              <path d="M20 48 L44 48" stroke="#f2c94c" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            <span class="stack-badge-val" id="stackBadgeVal">x500</span>
+          </div>
+
+          <div class="stack-details">
+            <div class="stack-title">Your Stack</div>
+            <div class="stack-note">Please ensure you take your winnings before leaving!</div>
+            <div class="stack-min">Initial buy-in to play at this table: <strong>Min: 5</strong></div>
+
+            <div class="buyin-controls">
+              <input type="range" id="buyinSlider" min="5" max="5000" step="5" value="500">
+              <div class="buyin-input-row">
+                <button class="stack-quick-btn" data-add="-100">-100</button>
+                <input type="number" id="buyinInput" min="5" max="100000" value="500">
+                <button class="stack-quick-btn" data-add="100">+100</button>
+                <button class="stack-quick-btn" data-add="500">+500</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button id="startGameBtn" class="rust-btn primary-btn">TAKE SEAT & BUY IN</button>
     </div>
   </div>
 
@@ -76,7 +112,7 @@
           </svg>
         </div>
         <div class="stats-box">
-          <div class="scrap-value"><span id="hudScrap">1000</span> SCRAP</div>
+          <div class="scrap-value"><span id="hudScrap">500</span> SCRAP</div>
           <div class="bet-value">BET <span id="hudBet">0</span></div>
           <div class="nickname-value" id="hudNickname">Survivor</div>
         </div>
@@ -104,6 +140,7 @@
           <div class="crt-screen">
             <div class="scanlines"></div>
             <div class="crt-flicker"></div>
+            <div class="crt-glow-overlay"></div>
             <div class="screen-content">
               <div class="crt-header">
                 <span>DEALER</span>
@@ -122,7 +159,7 @@
           </div>
         </div>
 
-        <!-- Real Dealer Physical Cards (Rendered above screen as in Rust) -->
+        <!-- Real Dealer Physical Cards -->
         <div class="physical-cards-area dealer-cards" id="dealerCardsArea"></div>
       </div>
 
@@ -132,6 +169,7 @@
           <div class="crt-screen">
             <div class="scanlines"></div>
             <div class="crt-flicker"></div>
+            <div class="crt-glow-overlay"></div>
             <div class="screen-content">
               <div class="crt-header">
                 <span>YOU</span>
@@ -162,7 +200,7 @@
           </div>
         </div>
 
-        <!-- Real Player Physical Cards (Rendered on table bottom) -->
+        <!-- Real Player Physical Cards -->
         <div class="physical-cards-area player-cards" id="playerCardsArea"></div>
       </div>
 

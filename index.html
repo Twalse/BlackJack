@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rust Blackjack Terminal</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#120e0c">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background environment -->
+  <div class="rust-environment">
+    <div class="vignette"></div>
+    <div class="dust-particles" id="dustParticles"></div>
+    <div class="red-alarm-light"></div>
+    <div class="neon-sign">BLACKJACK</div>
+  </div>
+
+  <!-- Main Menu Overlay -->
+  <div id="mainMenu" class="overlay-screen">
+    <div class="menu-card">
+      <div class="rust-logo-header">
+        <div class="rust-logo-icon"></div>
+        <h1>RUST BLACKJACK</h1>
+        <p class="subtitle">CASINO TERMINAL TRAINER</p>
+      </div>
+
+      <div class="form-group">
+        <label for="nicknameInput">SURVIVOR NICKNAME</label>
+        <input type="text" id="nicknameInput" maxlength="16" value="Survivor" placeholder="Enter nickname...">
+      </div>
+
+      <div class="form-group">
+        <label>DIFFICULTY LEVEL</label>
+        <div class="difficulty-options">
+          <label class="diff-btn">
+            <input type="radio" name="difficulty" value="easy">
+            <div class="btn-content">
+              <span class="diff-title">NOVICE (EASY)</span>
+              <span class="diff-desc">Dealer panics & draws cards risky, high bust chance.</span>
+            </div>
+          </label>
+          <label class="diff-btn">
+            <input type="radio" name="difficulty" value="medium" checked>
+            <div class="btn-content">
+              <span class="diff-title">EXPERIENCED (MEDIUM)</span>
+              <span class="diff-desc">Fair random deck rules, true casino odds.</span>
+            </div>
+          </label>
+          <label class="diff-btn">
+            <input type="radio" name="difficulty" value="hard">
+            <div class="btn-content">
+              <span class="diff-title">PRO (HARD)</span>
+              <span class="diff-desc">Dealer stack odds favor 20/21 totals.</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <button id="startGameBtn" class="rust-btn primary-btn">START TERMINAL</button>
+    </div>
+  </div>
+
+  <!-- Main Game Stage -->
+  <div id="gameStage" class="game-stage hidden">
+
+    <!-- Left Rust Player Info HUD -->
+    <div class="rust-hud-panel">
+      <div class="player-badge">
+        <div class="avatar-box">
+          <svg class="rust-avatar-svg" viewBox="0 0 40 40">
+            <rect width="40" height="40" fill="#2b2d28" />
+            <circle cx="20" cy="15" r="8" fill="#a4a896" />
+            <path d="M8 36 C8 25, 32 25, 32 36 Z" fill="#a4a896" />
+          </svg>
+        </div>
+        <div class="stats-box">
+          <div class="scrap-value"><span id="hudScrap">1000</span> SCRAP</div>
+          <div class="bet-value">BET <span id="hudBet">0</span></div>
+          <div class="nickname-value" id="hudNickname">Survivor</div>
+        </div>
+        <div class="difficulty-tag" id="hudDiffTag">MEDIUM</div>
+      </div>
+
+      <!-- Player Hand Value Bubble -->
+      <div class="score-badge" id="hudPlayerScore">0</div>
+    </div>
+
+    <!-- Dealer Status HUD top-left floating -->
+    <div class="dealer-score-badge-container">
+      <div class="dealer-title-label">DEALER</div>
+      <div class="score-badge dealer-score" id="hudDealerScore">?</div>
+    </div>
+
+    <!-- Center Cabinet & CRT Terminals -->
+    <div class="cabinet-container">
+
+      <!-- Upper Dealer Terminal Monitor -->
+      <div class="crt-monitor dealer-monitor">
+        <div class="crt-bezel">
+          <div class="bezel-text top-left">DEALER UNIT</div>
+          <div class="bezel-text graffiti">Avail!</div>
+          <div class="crt-screen">
+            <div class="scanlines"></div>
+            <div class="crt-flicker"></div>
+            <div class="screen-content">
+              <div class="crt-header">
+                <span>DEALER</span>
+                <span class="crt-score" id="crtDealerScore">0</span>
+              </div>
+              <div class="crt-cards-grid" id="crtDealerCards">
+                <!-- Visual ASCII/Vector slots for dealer -->
+              </div>
+              <div class="crt-status-msg" id="crtDealerStatus">READY</div>
+            </div>
+          </div>
+          <div class="bezel-knobs">
+            <span class="knob"></span>
+            <span class="knob"></span>
+            <div class="bow-tie"></div>
+          </div>
+        </div>
+
+        <!-- Real Dealer Physical Cards (Rendered above screen as in Rust) -->
+        <div class="physical-cards-area dealer-cards" id="dealerCardsArea"></div>
+      </div>
+
+      <!-- Lower Player Desk & Terminal -->
+      <div class="crt-monitor player-monitor">
+        <div class="crt-bezel player-bezel">
+          <div class="crt-screen">
+            <div class="scanlines"></div>
+            <div class="crt-flicker"></div>
+            <div class="screen-content">
+              <div class="crt-header">
+                <span>YOU</span>
+                <span class="crt-score" id="crtPlayerScore">0</span>
+              </div>
+              <div class="crt-cards-grid" id="crtPlayerCards">
+                <!-- Visual vector slots for player -->
+              </div>
+              <div class="crt-status-msg" id="crtPlayerStatus">PLACE BET</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Keypads / Buttons desk graphics -->
+        <div class="desk-keypads">
+          <div class="keypad left-keypad">
+            <div class="screen-mini">SCRAP</div>
+          </div>
+          <div class="keypad center-keypad">
+            <div class="btn-row">
+              <div class="term-btn">HIT</div>
+              <div class="term-btn">STAND</div>
+              <div class="term-btn">BET</div>
+            </div>
+          </div>
+          <div class="keypad right-keypad">
+            <div class="screen-mini">SYS OK</div>
+          </div>
+        </div>
+
+        <!-- Real Player Physical Cards (Rendered on table bottom) -->
+        <div class="physical-cards-area player-cards" id="playerCardsArea"></div>
+      </div>
+
+    </div> <!-- /cabinet-container -->
+
+    <!-- Result Banner Overlay -->
+    <div id="resultBanner" class="result-banner hidden">
+      <h2 id="resultTitle">YOU WIN!</h2>
+      <p id="resultSub">Scrap Won: 100</p>
+    </div>
+
+    <!-- Interactive Control Panel (Bottom) -->
+    <div class="control-panel">
+      <!-- Betting Phase Controls -->
+      <div id="bettingControls" class="control-group">
+        <div class="chip-selector">
+          <button class="chip-btn" data-amount="10">+10</button>
+          <button class="chip-btn" data-amount="50">+50</button>
+          <button class="chip-btn" data-amount="100">+100</button>
+          <button class="chip-btn" data-amount="500">+500</button>
+          <button class="chip-btn max-btn" id="btnMaxBet">MAX</button>
+          <button class="chip-btn clear-btn" id="btnClearBet">CLEAR</button>
+        </div>
+        <div class="action-buttons">
+          <button id="btnDeal" class="rust-btn deal-btn" disabled>DEAL (<span id="currentBetDisplay">0</span>)</button>
+        </div>
+      </div>
+
+      <!-- In-Game Play Phase Controls -->
+      <div id="playControls" class="control-group hidden">
+        <button id="btnHit" class="rust-btn action-btn hit-btn">
+          <span class="key-hint">H</span> HIT
+        </button>
+        <button id="btnStand" class="rust-btn action-btn stand-btn">
+          <span class="key-hint">S</span> STAND
+        </button>
+        <button id="btnDouble" class="rust-btn action-btn double-btn">
+          <span class="key-hint">D</span> DOUBLE
+        </button>
+      </div>
+
+      <!-- Post-Round Controls -->
+      <div id="postControls" class="control-group hidden">
+        <button id="btnNewRound" class="rust-btn primary-btn">NEXT HAND</button>
+        <button id="btnChangeBet" class="rust-btn secondary-btn">CHANGE BET</button>
+      </div>
+    </div>
+
+    <!-- Rust Bottom Right Survival Stats Bar & Key Hints -->
+    <div class="rust-survival-hud">
+      <div class="key-hints">
+        <div><span class="key">SPACE</span> HOLD TO MENU</div>
+        <div><span class="key">H</span> HIT</div>
+        <div><span class="key">S</span> STAND</div>
+      </div>
+      <div class="survival-bars">
+        <div class="stat-bar health"><span class="icon">+</span> <span id="valHealth">100</span></div>
+        <div class="stat-bar water"><span class="icon">💧</span> <span id="valWater">247</span></div>
+        <div class="stat-bar food"><span class="icon">🍖</span> <span id="valFood">256</span></div>
+      </div>
+    </div>
+
+    <!-- Top Left Menu Toggle Button -->
+    <button id="btnOpenMenu" class="rust-btn icon-menu-btn" title="Main Menu">⚙ MENU</button>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW reg error:', err));
+    }
+  </script>
+</body>
+</html>

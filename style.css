@@ -1,0 +1,933 @@
+/* Rust Blackjack Casino Terminal Stylesheet */
+
+:root {
+  --rust-bg: #100d0b;
+  --rust-accent-red: #cd412b;
+  --rust-accent-green: #5a7d2a;
+  --rust-crt-green: #38f538;
+  --rust-crt-bg: #071507;
+  --rust-panel-bg: rgba(30, 26, 22, 0.92);
+  --rust-border: #4a3e35;
+  --rust-text-gold: #f2c94c;
+  --rust-text-light: #e2dcd5;
+  --card-width: 105px;
+  --card-height: 150px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--rust-bg);
+  color: var(--rust-text-light);
+}
+
+/* --- Environment & Lighting --- */
+.rust-environment {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(205, 65, 43, 0.18) 0%, transparent 60%),
+    radial-gradient(circle at 50% 80%, rgba(30, 20, 15, 0.8) 0%, rgba(10, 8, 6, 1) 100%),
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 4px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 120px rgba(0,0,0,0.9);
+}
+
+.red-alarm-light {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 150px;
+  background: radial-gradient(ellipse at top, rgba(255, 30, 0, 0.25) 0%, transparent 70%);
+  filter: blur(20px);
+  animation: pulse-red 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-red {
+  0% { opacity: 0.5; }
+  100% { opacity: 1.0; }
+}
+
+.neon-sign {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: monospace, sans-serif;
+  font-weight: 900;
+  font-size: 1.8rem;
+  letter-spacing: 6px;
+  color: #ff3322;
+  text-shadow: 0 0 8px #ff2200, 0 0 20px #ff0000;
+  opacity: 0.85;
+}
+
+/* Dust particles animation */
+.dust-particles {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.3;
+  animation: floatDust 20s linear infinite;
+}
+
+@keyframes floatDust {
+  from { background-position: 0 0; }
+  to { background-position: 40px 80px; }
+}
+
+/* --- Main Menu Overlay --- */
+.overlay-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 10, 8, 0.92);
+  backdrop-filter: blur(6px);
+}
+
+.menu-card {
+  width: 90%;
+  max-width: 480px;
+  background: var(--rust-panel-bg);
+  border: 2px solid var(--rust-border);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  border-radius: 4px;
+}
+
+.rust-logo-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.rust-logo-header h1 {
+  font-size: 1.8rem;
+  letter-spacing: 3px;
+  color: #f0e6df;
+  margin-top: 8px;
+  text-shadow: 2px 2px 0px #000;
+}
+
+.rust-logo-header .subtitle {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: var(--rust-accent-red);
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  color: #a0958d;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.form-group input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  background: rgba(10, 8, 6, 0.8);
+  border: 1px solid var(--rust-border);
+  color: var(--rust-text-light);
+  font-size: 1rem;
+  outline: none;
+  border-radius: 2px;
+  transition: border-color 0.2s;
+}
+
+.form-group input[type="text"]:focus {
+  border-color: var(--rust-accent-red);
+}
+
+.difficulty-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.diff-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(18, 15, 12, 0.7);
+  border: 1px solid var(--rust-border);
+  padding: 10px 14px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+.diff-btn:hover {
+  background: rgba(45, 38, 32, 0.8);
+  border-color: #7a6859;
+}
+
+.diff-btn input[type="radio"] {
+  accent-color: var(--rust-accent-red);
+  margin-top: 4px;
+}
+
+.diff-title {
+  display: block;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #e8ded6;
+}
+
+.diff-desc {
+  display: block;
+  font-size: 0.75rem;
+  color: #8c827a;
+  margin-top: 2px;
+}
+
+/* --- Rust Button Styling --- */
+.rust-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(180deg, #d34832 0%, #a2301e 100%);
+  border: 1px solid #e25842;
+  border-bottom: 3px solid #6d1b0e;
+  color: #ffffff;
+  font-weight: 900;
+  letter-spacing: 2px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px #000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  transition: transform 0.1s, filter 0.2s;
+}
+
+.rust-btn:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.rust-btn:active:not(:disabled) {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+}
+
+.rust-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
+}
+
+.secondary-btn {
+  background: linear-gradient(180deg, #4d463f 0%, #312b26 100%);
+  border-color: #635b53;
+  border-bottom-color: #1a1614;
+}
+
+/* --- Main Game Stage --- */
+.game-stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Top Left Menu Button */
+.icon-menu-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: auto;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  z-index: 30;
+  background: #2a241f;
+  border: 1px solid #4a3e35;
+}
+
+/* --- HUD Left Panel (Player & Balance) --- */
+.rust-hud-panel {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 25;
+}
+
+.player-badge {
+  display: flex;
+  align-items: center;
+  background: rgba(68, 86, 38, 0.92);
+  border: 1px solid #739441;
+  border-radius: 2px;
+  padding: 6px 12px 6px 6px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  min-width: 180px;
+}
+
+.avatar-box {
+  width: 42px;
+  height: 42px;
+  background: #1b1e19;
+  border: 1px solid #2e3627;
+  margin-right: 10px;
+}
+
+.rust-avatar-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.stats-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.scrap-value {
+  font-weight: 900;
+  font-size: 0.95rem;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.bet-value {
+  font-size: 0.75rem;
+  color: #d1e2b8;
+  font-weight: bold;
+}
+
+.nickname-value {
+  font-size: 0.65rem;
+  color: #8fa078;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.difficulty-tag {
+  margin-left: auto;
+  font-size: 0.6rem;
+  background: rgba(0,0,0,0.4);
+  padding: 2px 5px;
+  border-radius: 2px;
+  color: #c2d6a5;
+  font-weight: bold;
+}
+
+/* Score Badge Bubbles */
+.score-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #1c1c1c;
+  border: 2px solid #333;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+}
+
+.dealer-score-badge-container {
+  position: absolute;
+  top: 60px;
+  left: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 25;
+}
+
+.dealer-title-label {
+  font-size: 0.65rem;
+  color: #aaa;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+  font-weight: bold;
+  background: rgba(0,0,0,0.6);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+/* --- Cabinet & Retro Terminals --- */
+.cabinet-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+}
+
+/* CRT Monitor Shell */
+.crt-monitor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.crt-bezel {
+  position: relative;
+  background: radial-gradient(circle at 30% 30%, #3d3b37 0%, #1f1d1a 100%);
+  border: 4px solid #141210;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 10px 25px rgba(0,0,0,0.9);
+  padding: 18px 22px 14px 22px;
+  border-radius: 12px;
+  width: 280px;
+}
+
+.bezel-text {
+  position: absolute;
+  font-size: 0.55rem;
+  color: #736c63;
+  font-family: monospace;
+}
+
+.bezel-text.top-left { top: 6px; left: 14px; }
+.bezel-text.graffiti {
+  bottom: 20px;
+  right: -25px;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  color: #58554e;
+  font-size: 0.8rem;
+  transform: rotate(-10deg);
+  opacity: 0.7;
+}
+
+.bezel-knobs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 0 10px;
+}
+
+.knob {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #666 0%, #111 100%);
+  border: 1px solid #000;
+}
+
+/* Easter egg Bow-tie on upper monitor */
+.bow-tie {
+  width: 22px;
+  height: 10px;
+  background: #111;
+  clip-path: polygon(0 0, 100% 0, 60% 50%, 100% 100%, 0 100%, 40% 50%);
+}
+
+/* CRT Screen Surface */
+.crt-screen {
+  position: relative;
+  width: 100%;
+  height: 130px;
+  background-color: var(--rust-crt-bg);
+  border-radius: 15px / 10px;
+  border: 3px solid #12100e;
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.95);
+  overflow: hidden;
+  padding: 8px;
+}
+
+/* CRT Scanlines & Screen Effects */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.45) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.crt-flicker {
+  position: absolute;
+  inset: 0;
+  background: rgba(56, 245, 56, 0.03);
+  pointer-events: none;
+  z-index: 6;
+  animation: crtFlicker 0.15s infinite;
+}
+
+@keyframes crtFlicker {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.9; }
+}
+
+.screen-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--rust-crt-green);
+  font-family: 'Courier New', Courier, monospace;
+  text-shadow: 0 0 5px rgba(56, 245, 56, 0.8);
+}
+
+.crt-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-bottom: 1px dashed rgba(56, 245, 56, 0.4);
+  padding-bottom: 2px;
+}
+
+.crt-cards-grid {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+  margin: 6px 0;
+}
+
+.crt-mini-card {
+  width: 28px;
+  height: 38px;
+  border: 1px solid var(--rust-crt-green);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+  background: rgba(56, 245, 56, 0.08);
+}
+
+.crt-status-msg {
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+}
+
+/* Lower Player Terminal & Desk Controls */
+.player-monitor {
+  margin-top: 15px;
+}
+
+.player-bezel {
+  width: 310px;
+}
+
+.desk-keypads {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.keypad {
+  background: #25221e;
+  border: 1px solid #3d3731;
+  padding: 4px 8px;
+  border-radius: 3px;
+}
+
+.screen-mini {
+  font-family: monospace;
+  font-size: 0.55rem;
+  color: var(--rust-crt-green);
+  background: #000;
+  padding: 2px 4px;
+}
+
+.btn-row {
+  display: flex;
+  gap: 4px;
+}
+
+.term-btn {
+  font-size: 0.55rem;
+  background: #3b352e;
+  color: #ccc;
+  padding: 2px 6px;
+  border-radius: 2px;
+  border-bottom: 2px solid #1a1714;
+}
+
+/* --- Physical Cards Display --- */
+.physical-cards-area {
+  position: absolute;
+  display: flex;
+  gap: 12px;
+  z-index: 20;
+}
+
+.dealer-cards {
+  top: -65px;
+  left: -90px;
+}
+
+.player-cards {
+  bottom: -90px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Playing Card Component */
+.rust-card {
+  width: var(--card-width);
+  height: var(--card-height);
+  background: #fdfbf7;
+  border-radius: 6px;
+  box-shadow: -3px 4px 12px rgba(0,0,0,0.7), inset 0 0 10px rgba(180, 160, 130, 0.5);
+  border: 1px solid #dcd4c8;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6px;
+  transition: transform 0.3s ease, box-shadow 0.3s;
+  animation: dealCard 0.35s ease-out;
+}
+
+@keyframes dealCard {
+  from {
+    opacity: 0;
+    transform: translateY(-60px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.rust-card.red {
+  color: #b52216;
+}
+
+.rust-card.black {
+  color: #1a1918;
+}
+
+/* Wear / Dirt Overlay on Card */
+.rust-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(120, 90, 50, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(80, 60, 30, 0.12) 0%, transparent 50%),
+    repeating-linear-gradient(45deg, transparent 0, transparent 10px, rgba(0,0,0,0.02) 11px);
+  pointer-events: none;
+}
+
+.card-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+}
+
+.card-rank {
+  font-size: 1.2rem;
+  font-weight: 900;
+  font-family: 'Impact', 'Arial Black', sans-serif;
+}
+
+.card-suit {
+  font-size: 1.1rem;
+}
+
+.card-center-art {
+  position: absolute;
+  inset: 22px 10px 22px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-artwork-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.card-pips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  font-size: 1.2rem;
+}
+
+.card-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1;
+  transform: rotate(180deg);
+}
+
+/* Card Back Design */
+.rust-card.card-back {
+  background: linear-gradient(135deg, #a63b28 0%, #611e12 100%);
+  border: 1px solid #7c2d1e;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+  padding: 8px;
+}
+
+.card-back-inner {
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 6px,
+    rgba(0, 0, 0, 0.1) 6px,
+    rgba(0, 0, 0, 0.1) 12px
+  );
+}
+
+.rust-back-logo {
+  width: 50px;
+  height: 50px;
+  fill: #1a110e;
+  opacity: 0.85;
+}
+
+/* --- Result Overlay Banner --- */
+.result-banner {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(90, 125, 42, 0.94);
+  border: 2px solid #7da63d;
+  color: #ffffff;
+  padding: 16px 40px;
+  border-radius: 3px;
+  text-align: center;
+  z-index: 50;
+  box-shadow: 0 0 30px rgba(0,0,0,0.9);
+  animation: bannerPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.result-banner.loss {
+  background: rgba(162, 48, 30, 0.94);
+  border-color: #d34832;
+}
+
+.result-banner.push {
+  background: rgba(140, 110, 30, 0.94);
+  border-color: #d4a72c;
+}
+
+@keyframes bannerPop {
+  from { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
+  to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.result-banner h2 {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px #000;
+}
+
+.result-banner p {
+  font-size: 0.95rem;
+  margin-top: 4px;
+  font-weight: bold;
+}
+
+/* --- Controls Panel (Bottom) --- */
+.control-panel {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(22, 18, 15, 0.95);
+  border: 1px solid var(--rust-border);
+  padding: 12px 18px;
+  border-radius: 4px;
+  z-index: 30;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.8);
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chip-selector {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.chip-btn {
+  background: #2e2823;
+  border: 1px solid #52473f;
+  color: #ded6ce;
+  font-weight: bold;
+  padding: 8px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.chip-btn:hover {
+  background: #453c35;
+  color: #fff;
+  border-color: var(--rust-accent-red);
+}
+
+.chip-btn.max-btn {
+  background: #4a1f18;
+  border-color: #822e20;
+  color: #ff9d8c;
+}
+
+.chip-btn.clear-btn {
+  background: #25201c;
+  border-color: #3b332d;
+  color: #999;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+#playControls {
+  flex-direction: row;
+  justify-content: center;
+  gap: 15px;
+}
+
+.action-btn {
+  flex: 1;
+  max-width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.key-hint {
+  font-size: 0.65rem;
+  background: rgba(0,0,0,0.4);
+  padding: 2px 6px;
+  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* --- Survival HUD (Bottom Right) --- */
+.rust-survival-hud {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  z-index: 25;
+}
+
+.key-hints {
+  font-size: 0.65rem;
+  color: #80766d;
+  text-align: right;
+  line-height: 1.4;
+}
+
+.key-hints .key {
+  background: #2a241e;
+  padding: 1px 4px;
+  border-radius: 2px;
+  color: #ccc;
+  font-weight: bold;
+}
+
+.survival-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 130px;
+}
+
+.stat-bar {
+  display: flex;
+  align-items: center;
+  padding: 3px 8px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 2px;
+  color: #fff;
+  justify-content: space-between;
+}
+
+.stat-bar.health { background: rgba(90, 125, 42, 0.9); }
+.stat-bar.water { background: rgba(45, 105, 135, 0.9); }
+.stat-bar.food { background: rgba(145, 95, 35, 0.9); }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  :root {
+    --card-width: 80px;
+    --card-height: 115px;
+  }
+  .dealer-cards { top: -50px; left: -60px; }
+  .player-cards { bottom: -70px; }
+  .crt-bezel { width: 230px; padding: 12px; }
+  .player-bezel { width: 250px; }
+  .rust-hud-panel { left: 10px; top: 10px; }
+  .dealer-score-badge-container { left: 210px; top: 10px; }
+  .rust-survival-hud { display: none; }
+}

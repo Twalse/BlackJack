@@ -1,0 +1,17 @@
+{
+  "name": "Rust Blackjack Casino Terminal",
+  "short_name": "Rust Blackjack",
+  "description": "Post-apocalyptic Blackjack terminal trainer inspired by Rust.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#120e0c",
+  "theme_color": "#120e0c",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23cd412b'><rect width='512' height='512' fill='%23120e0c'/><path d='M100 200h100v100H100zM220 100h100v300H220zM340 200h100v100H340z' fill='%23cd412b'/><text x='256' y='460' font-family='sans-serif' font-weight='bold' font-size='60' fill='%23e0e0e0' text-anchor='middle'>SCRAP</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

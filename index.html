@@ -17,9 +17,52 @@
     <div class="neon-sign">BLACKJACK</div>
   </div>
 
+  <!-- Help Rules Modal -->
+  <div id="helpModal" class="overlay-screen hidden">
+    <div class="menu-card help-card">
+      <div class="rust-logo-header">
+        <div class="rust-logo-icon"></div>
+        <h2>RULES & TERMINAL GUIDE</h2>
+        <p class="subtitle">CASINO TERMINAL MANUAL</p>
+      </div>
+
+      <div class="help-section">
+        <h3>BLACKJACK 21 RULES</h3>
+        <ul>
+          <li><strong>Goal:</strong> Get closer to 21 than the dealer without going over (Bust).</li>
+          <li><strong>Cards:</strong> 2–10 = face value, J/Q/K = 10, Ace = 1 or 11.</li>
+          <li><strong>Hit (H):</strong> Draw another card.</li>
+          <li><strong>Stand (S):</strong> Hold your current total.</li>
+          <li><strong>Double (D):</strong> Double your bet for exactly one final card.</li>
+          <li><strong>Blackjack:</strong> Ace + 10-value on initial deal pays 3:2.</li>
+        </ul>
+      </div>
+
+      <div class="help-section">
+        <h3>DIFFICULTY MECHANICS</h3>
+        <ul>
+          <li><span class="diff-highlight easy">NOVICE:</span> Dealer panics, taking risky draws that often cause Busts.</li>
+          <li><span class="diff-highlight medium">EXPERIENCED:</span> Standard casino rules and fair probability.</li>
+          <li><span class="diff-highlight hard">PRO:</span> Dealer stack rigged towards 20/21 hand totals.</li>
+        </ul>
+      </div>
+
+      <div class="help-section">
+        <h3>CARD GAME STORAGE & SCRAP</h3>
+        <p>Buy in at the main terminal with your Scrap stack. Winnings are deposited directly into your terminal stack upon hand completion.</p>
+      </div>
+
+      <button id="btnCloseHelp" class="rust-btn primary-btn">CLOSE MANUAL</button>
+    </div>
+  </div>
+
   <!-- Main Menu Overlay -->
   <div id="mainMenu" class="overlay-screen">
     <div class="menu-card">
+      <div class="menu-top-actions">
+        <button id="btnOpenHelpMenu" class="help-trigger-btn" title="Game Rules & Info">? HELP</button>
+      </div>
+
       <div class="rust-logo-header">
         <div class="rust-logo-icon"></div>
         <h1>RUST BLACKJACK</h1>
@@ -101,6 +144,12 @@
   <!-- Main Game Stage -->
   <div id="gameStage" class="game-stage hidden">
 
+    <!-- Top Action Buttons -->
+    <div class="top-nav-actions">
+      <button id="btnOpenHelpGame" class="help-trigger-btn" title="Help & Rules">? HELP</button>
+      <button id="btnOpenMenu" class="rust-btn icon-menu-btn" title="Main Menu">⚙ MENU</button>
+    </div>
+
     <!-- Left Rust Player Info HUD -->
     <div class="rust-hud-panel">
       <div class="player-badge">
@@ -132,18 +181,50 @@
     <!-- Center Cabinet & CRT Terminals -->
     <div class="cabinet-container">
 
+      <!-- Decorative Mechanical Wires & Pipes Behind Terminals -->
+      <div class="terminal-wiring">
+        <div class="wire wire-1"></div>
+        <div class="wire wire-2"></div>
+        <div class="gauge-box left-gauge">
+          <svg viewBox="0 0 40 40" class="gauge-svg">
+            <circle cx="20" cy="20" r="18" fill="#181410" stroke="#4a3e35" stroke-width="2"/>
+            <path d="M 8 26 A 14 14 0 1 1 32 26" fill="none" stroke="#5a7d2a" stroke-width="3"/>
+            <line x1="20" y1="20" x2="28" y2="10" stroke="#cd412b" stroke-width="2"/>
+            <circle cx="20" cy="20" r="3" fill="#ffffff"/>
+          </svg>
+          <span class="gauge-label">SYS VOLT</span>
+        </div>
+        <div class="gauge-box right-gauge">
+          <svg viewBox="0 0 40 40" class="gauge-svg">
+            <circle cx="20" cy="20" r="18" fill="#181410" stroke="#4a3e35" stroke-width="2"/>
+            <path d="M 8 26 A 14 14 0 1 1 32 26" fill="none" stroke="#f2c94c" stroke-width="3"/>
+            <line x1="20" y1="20" x2="12" y2="12" stroke="#cd412b" stroke-width="2"/>
+            <circle cx="20" cy="20" r="3" fill="#ffffff"/>
+          </svg>
+          <span class="gauge-label">DECK ADJ</span>
+        </div>
+      </div>
+
       <!-- Upper Dealer Terminal Monitor -->
       <div class="crt-monitor dealer-monitor">
-        <div class="crt-bezel">
-          <div class="bezel-text top-left">DEALER UNIT</div>
+        <!-- Heavy Rusty Metallic Casing with Rivets -->
+        <div class="crt-bezel rusty-metal-casing">
+          <div class="rivet top-left-rivet"></div>
+          <div class="rivet top-right-rivet"></div>
+          <div class="rivet bottom-left-rivet"></div>
+          <div class="rivet bottom-right-rivet"></div>
+
+          <div class="bezel-plate top-plate">DEALER UNIT // SYS VER. 1.34</div>
           <div class="bezel-text graffiti">Avail!</div>
+
           <div class="crt-screen">
             <div class="scanlines"></div>
+            <div class="pixel-grid"></div>
             <div class="crt-flicker"></div>
             <div class="crt-glow-overlay"></div>
             <div class="screen-content">
               <div class="crt-header">
-                <span>DEALER</span>
+                <span>DEALER UNIT</span>
                 <span class="crt-score" id="crtDealerScore">0</span>
               </div>
               <div class="crt-cards-grid" id="crtDealerCards">
@@ -152,9 +233,11 @@
               <div class="crt-status-msg" id="crtDealerStatus">READY</div>
             </div>
           </div>
+
           <div class="bezel-knobs">
             <span class="knob"></span>
             <span class="knob"></span>
+            <div class="warning-tag">DANGER: HIGH VOLTAGE</div>
             <div class="bow-tie"></div>
           </div>
         </div>
@@ -165,9 +248,17 @@
 
       <!-- Lower Player Desk & Terminal -->
       <div class="crt-monitor player-monitor">
-        <div class="crt-bezel player-bezel">
+        <div class="crt-bezel player-bezel rusty-metal-casing">
+          <div class="rivet top-left-rivet"></div>
+          <div class="rivet top-right-rivet"></div>
+          <div class="rivet bottom-left-rivet"></div>
+          <div class="rivet bottom-right-rivet"></div>
+
+          <div class="bezel-plate player-plate">SURVIVOR TERMINAL</div>
+
           <div class="crt-screen">
             <div class="scanlines"></div>
+            <div class="pixel-grid"></div>
             <div class="crt-flicker"></div>
             <div class="crt-glow-overlay"></div>
             <div class="screen-content">
@@ -186,7 +277,7 @@
         <!-- Keypads / Buttons desk graphics -->
         <div class="desk-keypads">
           <div class="keypad left-keypad">
-            <div class="screen-mini">SCRAP</div>
+            <div class="screen-mini">SCRAP LINK</div>
           </div>
           <div class="keypad center-keypad">
             <div class="btn-row">
@@ -212,49 +303,74 @@
       <p id="resultSub">Scrap Won: 100</p>
     </div>
 
+    <!-- CARD GAME STORAGE In-Game Indicator Box -->
+    <div class="storage-game-hud" id="gameStorageHud">
+      <span class="storage-label">CARD GAME STORAGE:</span>
+      <span class="storage-scrap-val">
+        <svg class="mini-scrap-svg" viewBox="0 0 24 24">
+          <path d="M4 16 L20 16 L18 22 L6 22 Z" fill="#f2c94c"/>
+          <circle cx="12" cy="8" r="5" fill="#a8927b"/>
+        </svg>
+        DEPOSIT (<span id="inGameStorageVal">500</span>)
+      </span>
+    </div>
+
     <!-- Interactive Control Panel (Bottom) -->
     <div class="control-panel">
       <!-- Betting Phase Controls -->
       <div id="bettingControls" class="control-group">
         <div class="chip-selector">
-          <button class="chip-btn" data-amount="10">+10</button>
-          <button class="chip-btn" data-amount="50">+50</button>
-          <button class="chip-btn" data-amount="100">+100</button>
-          <button class="chip-btn" data-amount="500">+500</button>
-          <button class="chip-btn max-btn" id="btnMaxBet">MAX</button>
-          <button class="chip-btn clear-btn" id="btnClearBet">CLEAR</button>
+          <button class="chip-btn rust-tactile-switch" data-amount="10">+10</button>
+          <button class="chip-btn rust-tactile-switch" data-amount="50">+50</button>
+          <button class="chip-btn rust-tactile-switch" data-amount="100">+100</button>
+          <button class="chip-btn rust-tactile-switch" data-amount="500">+500</button>
+
+          <button class="chip-btn max-btn rust-tactile-switch" id="btnMaxBet">
+            <svg class="btn-icon-svg" viewBox="0 0 16 16">
+              <path d="M2 12 H14 V14 H2 Z M4 8 H12 V10 H4 Z M6 4 H10 V6 H6 Z" fill="#ff9d8c"/>
+            </svg>
+            MAX
+          </button>
+
+          <button class="chip-btn clear-btn rust-tactile-switch" id="btnClearBet">
+            <svg class="btn-icon-svg" viewBox="0 0 16 16">
+              <path d="M4 4 L12 12 M12 4 L4 12" stroke="#aaa" stroke-width="2"/>
+            </svg>
+            CLEAR
+          </button>
         </div>
         <div class="action-buttons">
-          <button id="btnDeal" class="rust-btn deal-btn" disabled>DEAL (<span id="currentBetDisplay">0</span>)</button>
+          <button id="btnDeal" class="rust-btn deal-btn rust-tactile-switch" disabled>DEAL (<span id="currentBetDisplay">0</span>)</button>
         </div>
       </div>
 
       <!-- In-Game Play Phase Controls -->
       <div id="playControls" class="control-group hidden">
-        <button id="btnHit" class="rust-btn action-btn hit-btn">
+        <button id="btnHit" class="rust-btn action-btn hit-btn rust-tactile-switch">
           <span class="key-hint">H</span> HIT
         </button>
-        <button id="btnStand" class="rust-btn action-btn stand-btn">
+        <button id="btnStand" class="rust-btn action-btn stand-btn rust-tactile-switch">
           <span class="key-hint">S</span> STAND
         </button>
-        <button id="btnDouble" class="rust-btn action-btn double-btn">
+        <button id="btnDouble" class="rust-btn action-btn double-btn rust-tactile-switch">
           <span class="key-hint">D</span> DOUBLE
         </button>
       </div>
 
       <!-- Post-Round Controls -->
       <div id="postControls" class="control-group hidden">
-        <button id="btnNewRound" class="rust-btn primary-btn">NEXT HAND</button>
-        <button id="btnChangeBet" class="rust-btn secondary-btn">CHANGE BET</button>
+        <button id="btnNewRound" class="rust-btn primary-btn rust-tactile-switch">NEXT HAND</button>
+        <button id="btnChangeBet" class="rust-btn secondary-btn rust-tactile-switch">CHANGE BET</button>
       </div>
     </div>
 
     <!-- Rust Bottom Right Survival Stats Bar & Key Hints -->
     <div class="rust-survival-hud">
       <div class="key-hints">
-        <div><span class="key">SPACE</span> HOLD TO MENU</div>
+        <div><span class="key">SPACE</span> HOLD TO MENU / DEAL</div>
         <div><span class="key">H</span> HIT</div>
         <div><span class="key">S</span> STAND</div>
+        <div><span class="key">D</span> DOUBLE</div>
       </div>
       <div class="survival-bars">
         <div class="stat-bar health"><span class="icon">+</span> <span id="valHealth">100</span></div>
@@ -263,8 +379,6 @@
       </div>
     </div>
 
-    <!-- Top Left Menu Toggle Button -->
-    <button id="btnOpenMenu" class="rust-btn icon-menu-btn" title="Main Menu">⚙ MENU</button>
   </div>
 
   <script src="script.js"></script>

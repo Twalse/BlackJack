@@ -1,4 +1,4 @@
-/* Rust Blackjack Casino Terminal Engine - Final Polish */
+/* Rust Blackjack Casino Terminal Engine - Final Polish with Help Modal & Storage HUD */
 
 // Sound Synthesizer using Web Audio API
 class RustAudio {
@@ -226,13 +226,19 @@ class RustBlackjackGame {
     this.elements = {
       mainMenu: document.getElementById('mainMenu'),
       gameStage: document.getElementById('gameStage'),
+      helpModal: document.getElementById('helpModal'),
+
       nicknameInput: document.getElementById('nicknameInput'),
       startGameBtn: document.getElementById('startGameBtn'),
       btnOpenMenu: document.getElementById('btnOpenMenu'),
+      btnOpenHelpMenu: document.getElementById('btnOpenHelpMenu'),
+      btnOpenHelpGame: document.getElementById('btnOpenHelpGame'),
+      btnCloseHelp: document.getElementById('btnCloseHelp'),
 
       buyinSlider: document.getElementById('buyinSlider'),
       buyinInput: document.getElementById('buyinInput'),
       stackBadgeVal: document.getElementById('stackBadgeVal'),
+      inGameStorageVal: document.getElementById('inGameStorageVal'),
 
       hudScrap: document.getElementById('hudScrap'),
       hudBet: document.getElementById('hudBet'),
@@ -323,6 +329,21 @@ class RustBlackjackGame {
       this.elements.mainMenu.classList.remove('hidden');
     });
 
+    // Help Modal Triggers
+    const toggleHelp = (show) => {
+      audio.init();
+      audio.playClick();
+      if (show) {
+        this.elements.helpModal.classList.remove('hidden');
+      } else {
+        this.elements.helpModal.classList.add('hidden');
+      }
+    };
+
+    if (this.elements.btnOpenHelpMenu) this.elements.btnOpenHelpMenu.addEventListener('click', () => toggleHelp(true));
+    if (this.elements.btnOpenHelpGame) this.elements.btnOpenHelpGame.addEventListener('click', () => toggleHelp(true));
+    if (this.elements.btnCloseHelp) this.elements.btnCloseHelp.addEventListener('click', () => toggleHelp(false));
+
     // Chip selections
     document.querySelectorAll('.chip-btn[data-amount]').forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -384,7 +405,7 @@ class RustBlackjackGame {
     // Keyboard Shortcuts
     window.addEventListener('keydown', (e) => {
       audio.init();
-      if (this.elements.mainMenu.classList.contains('hidden')) {
+      if (this.elements.mainMenu.classList.contains('hidden') && this.elements.helpModal.classList.contains('hidden')) {
         if (e.key === 'h' || e.key === 'H' || e.key === 'р' || e.key === 'Р') {
           if (this.gameState === 'PLAYING') this.playerHit();
         } else if (e.key === 's' || e.key === 'S' || e.key === 'ы' || e.key === 'Ы') {
@@ -428,6 +449,9 @@ class RustBlackjackGame {
     this.elements.hudNickname.textContent = this.nickname;
     this.elements.hudDiffTag.textContent = this.difficulty.toUpperCase();
     this.elements.currentBetDisplay.textContent = this.currentBet;
+    if (this.elements.inGameStorageVal) {
+      this.elements.inGameStorageVal.textContent = this.scrap;
+    }
 
     this.elements.btnDeal.disabled = (this.currentBet <= 0 || this.currentBet > this.scrap);
     localStorage.setItem('rust_bj_scrap', this.scrap);

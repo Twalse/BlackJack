@@ -3,12 +3,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Roboto:wght@400;700;900&display=swap');
 
 :root {
-  --rust-bg: #0d0b09;
+  --rust-bg: #0c0a08;
   --rust-accent-red: #cd412b;
   --rust-accent-green: #5a7d2a;
   --rust-crt-green: #38f538;
-  --rust-crt-bg: #051105;
-  --rust-panel-bg: rgba(26, 22, 18, 0.96);
+  --rust-crt-bg: #030d03;
+  --rust-panel-bg: rgba(22, 18, 14, 0.96);
   --rust-border: #4a3e35;
   --rust-border-dark: #241d18;
   --rust-text-gold: #f2c94c;
@@ -39,9 +39,9 @@ body, html {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 30%, rgba(205, 65, 43, 0.22) 0%, transparent 65%),
-    radial-gradient(circle at 50% 85%, rgba(45, 30, 20, 0.8) 0%, rgba(8, 6, 4, 1) 100%),
-    repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0px, rgba(0,0,0,0.18) 1px, transparent 1px, transparent 3px);
+    radial-gradient(circle at 50% 25%, rgba(205, 65, 43, 0.25) 0%, transparent 65%),
+    radial-gradient(circle at 50% 85%, rgba(45, 30, 20, 0.85) 0%, rgba(8, 6, 4, 1) 100%),
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.2) 0px, rgba(0,0,0,0.2) 1px, transparent 1px, transparent 3px);
   pointer-events: none;
   z-index: 1;
 }
@@ -51,15 +51,15 @@ body, html {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
   opacity: 0.6;
 }
 
 .vignette {
   position: absolute;
   inset: 0;
-  box-shadow: inset 0 0 140px rgba(0,0,0,0.92);
+  box-shadow: inset 0 0 150px rgba(0,0,0,0.95);
 }
 
 .red-alarm-light {
@@ -67,15 +67,15 @@ body, html {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 400px;
-  height: 180px;
-  background: radial-gradient(ellipse at top, rgba(255, 30, 0, 0.3) 0%, transparent 75%);
-  filter: blur(25px);
+  width: 450px;
+  height: 200px;
+  background: radial-gradient(ellipse at top, rgba(255, 30, 0, 0.35) 0%, transparent 75%);
+  filter: blur(30px);
   animation: pulse-red 4s ease-in-out infinite alternate;
 }
 
 @keyframes pulse-red {
-  0% { opacity: 0.4; }
+  0% { opacity: 0.35; }
   100% { opacity: 0.95; }
 }
 
@@ -108,6 +108,92 @@ body, html {
   to { background-position: 50px 100px; }
 }
 
+/* --- Navigation & Help Buttons --- */
+.top-nav-actions {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 10px;
+  z-index: 35;
+}
+
+.help-trigger-btn {
+  background: #2a221b;
+  border: 1px solid #524235;
+  color: #d1c5b8;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  transition: all 0.2s;
+}
+
+.help-trigger-btn:hover {
+  background: var(--rust-accent-red);
+  color: #fff;
+  border-color: #ff6a52;
+}
+
+.menu-top-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+/* Help Modal Styling */
+.help-card {
+  max-width: 580px;
+}
+
+.help-section {
+  margin-bottom: 16px;
+  background: rgba(12, 10, 8, 0.8);
+  padding: 12px 16px;
+  border: 1px solid #3d332a;
+  border-radius: 3px;
+}
+
+.help-section h3 {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--rust-text-gold);
+  margin-bottom: 8px;
+  border-bottom: 1px dashed #382e25;
+  padding-bottom: 4px;
+}
+
+.help-section ul {
+  list-style-type: none;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #c4b8ab;
+}
+
+.help-section li {
+  margin-bottom: 4px;
+}
+
+.help-section p {
+  font-size: 0.8rem;
+  color: #c4b8ab;
+  line-height: 1.4;
+}
+
+.diff-highlight {
+  font-weight: bold;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+}
+
+.diff-highlight.easy { background: #3d5e20; color: #bdfa89; }
+.diff-highlight.medium { background: #6b5c22; color: #ffeb99; }
+.diff-highlight.hard { background: #7a2216; color: #ffb8ad; }
+
 /* --- Main Menu Overlay --- */
 .overlay-screen {
   position: fixed;
@@ -137,7 +223,7 @@ body, html {
   margin-bottom: 20px;
 }
 
-.rust-logo-header h1 {
+.rust-logo-header h1, .rust-logo-header h2 {
   font-size: 1.8rem;
   letter-spacing: 3px;
   color: #f0e6df;
@@ -365,6 +451,42 @@ body, html {
   border-color: var(--rust-accent-red);
 }
 
+/* CARD GAME STORAGE Gameplay Indicator Box */
+.storage-game-hud {
+  position: absolute;
+  bottom: 85px;
+  left: 20px;
+  background: rgba(18, 14, 11, 0.92);
+  border: 1px solid #4a3c30;
+  padding: 6px 12px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+  z-index: 25;
+}
+
+.storage-label {
+  color: #9c8e80;
+  font-weight: bold;
+}
+
+.storage-scrap-val {
+  color: var(--rust-text-gold);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mini-scrap-svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* --- Rust Button Styling --- */
 .rust-btn {
   width: 100%;
@@ -423,13 +545,9 @@ body, html {
 
 /* Top Left Menu Button */
 .icon-menu-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
   width: auto;
   padding: 6px 14px;
   font-size: 0.8rem;
-  z-index: 30;
   background: #2a241f;
   border: 1px solid #4a3e35;
 }
@@ -558,40 +676,129 @@ body, html {
   max-width: 650px;
 }
 
+/* Terminal Mechanical Wiring & Gauges Background */
+.terminal-wiring {
+  position: absolute;
+  inset: -20px -40px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.wire {
+  position: absolute;
+  border-style: solid;
+  border-color: #2b231c;
+}
+
+.wire-1 {
+  top: 15%;
+  left: 10px;
+  width: 40px;
+  height: 180px;
+  border-width: 0 0 4px 4px;
+  border-radius: 0 0 0 12px;
+}
+
+.wire-2 {
+  top: 30%;
+  right: 15px;
+  width: 35px;
+  height: 150px;
+  border-width: 4px 4px 0 0;
+  border-radius: 0 12px 0 0;
+}
+
+.gauge-box {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.left-gauge { top: 20%; left: -25px; }
+.right-gauge { top: 55%; right: -25px; }
+
+.gauge-svg { width: 36px; height: 36px; }
+
+.gauge-label {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: #7a6e62;
+  margin-top: 2px;
+}
+
+/* Heavy Rusty Metallic Panels Casing with Visible Rivets */
+.rusty-metal-casing {
+  position: relative;
+  background:
+    radial-gradient(circle at 20% 20%, #4a4137 0%, #2b241e 60%, #171310 100%),
+    repeating-linear-gradient(45deg, rgba(0,0,0,0.08) 0, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 6px);
+  border: 4px solid #1a1511;
+  box-shadow:
+    inset 0 0 15px rgba(0,0,0,0.92),
+    0 12px 30px rgba(0,0,0,0.95),
+    0 0 2px rgba(255,255,255,0.1);
+  padding: 22px 24px 16px 24px;
+  border-radius: 8px;
+}
+
+/* Metal Rivets */
+.rivet {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #8c7d6f 0%, #2d2620 100%);
+  box-shadow: inset -1px -1px 2px rgba(0,0,0,0.8), 1px 1px 2px rgba(255,255,255,0.2);
+}
+
+.top-left-rivet { top: 6px; left: 8px; }
+.top-right-rivet { top: 6px; right: 8px; }
+.bottom-left-rivet { bottom: 6px; left: 8px; }
+.bottom-right-rivet { bottom: 6px; right: 8px; }
+
+.bezel-plate {
+  position: absolute;
+  top: 5px;
+  left: 22px;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: #a39587;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.warning-tag {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  background: #f2c94c;
+  color: #000;
+  font-weight: bold;
+  padding: 1px 4px;
+  border-radius: 1px;
+}
+
 /* CRT Monitor Shell */
 .crt-monitor {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 10;
 }
 
 .crt-bezel {
-  position: relative;
-  background: radial-gradient(circle at 30% 30%, #3a3834 0%, #1a1815 100%);
-  border: 4px solid #110f0d;
-  box-shadow: inset 0 0 12px rgba(0,0,0,0.9), 0 12px 28px rgba(0,0,0,0.95);
-  padding: 18px 22px 14px 22px;
-  border-radius: 12px;
-  width: 280px;
+  width: 290px;
 }
 
-.bezel-text {
-  position: absolute;
-  font-size: 0.55rem;
-  color: #736c63;
-  font-family: var(--font-mono);
-}
-
-.bezel-text.top-left { top: 6px; left: 14px; }
 .bezel-text.graffiti {
-  bottom: 20px;
+  bottom: 22px;
   right: -25px;
   font-family: 'Comic Sans MS', cursive, sans-serif;
-  color: #58554e;
+  color: #635f56;
   font-size: 0.8rem;
   transform: rotate(-10deg);
-  opacity: 0.7;
+  opacity: 0.75;
 }
 
 .bezel-knobs {
@@ -610,7 +817,6 @@ body, html {
   border: 1px solid #000;
 }
 
-/* Easter egg Bow-tie on upper monitor */
 .bow-tie {
   width: 22px;
   height: 10px;
@@ -618,30 +824,41 @@ body, html {
   clip-path: polygon(0 0, 100% 0, 60% 50%, 100% 100%, 0 100%, 40% 50%);
 }
 
-/* CRT Screen Surface with Realistic Curved CRT Vignette */
+/* CRT Screen Surface with Enhanced Phosphor Green Glow & Pixel Grid */
 .crt-screen {
   position: relative;
   width: 100%;
-  height: 130px;
+  height: 135px;
   background-color: var(--rust-crt-bg);
-  border-radius: 16px / 12px;
+  border-radius: 18px / 14px;
   border: 3px solid #0e0c0a;
-  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.98), 0 0 10px rgba(56, 245, 56, 0.15);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.98), 0 0 12px rgba(56, 245, 56, 0.2);
   overflow: hidden;
-  padding: 8px;
+  padding: 10px;
 }
 
-/* CRT Scanlines & Screen Glow Effects */
+/* Scanlines & Pixel Grid Shaders */
 .scanlines {
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.5) 0px,
-    rgba(0, 0, 0, 0.5) 1px,
+    rgba(0, 0, 0, 0.6) 0px,
+    rgba(0, 0, 0, 0.6) 1px,
     transparent 1px,
     transparent 3px
   );
+  pointer-events: none;
+  z-index: 5;
+}
+
+.pixel-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(0,0,0,0.15) 1px, transparent 1px);
+  background-size: 3px 3px;
   pointer-events: none;
   z-index: 5;
 }
@@ -658,7 +875,7 @@ body, html {
 .crt-glow-overlay {
   position: absolute;
   inset: 0;
-  box-shadow: inset 0 0 35px rgba(56, 245, 56, 0.2);
+  box-shadow: inset 0 0 40px rgba(56, 245, 56, 0.25);
   pointer-events: none;
   z-index: 7;
 }
@@ -678,7 +895,7 @@ body, html {
   justify-content: space-between;
   color: var(--rust-crt-green);
   font-family: var(--font-mono);
-  text-shadow: 0 0 6px rgba(56, 245, 56, 0.85);
+  text-shadow: 0 0 8px rgba(56, 245, 56, 0.95), 0 0 18px rgba(56, 245, 56, 0.4);
 }
 
 .crt-header {
@@ -710,7 +927,7 @@ body, html {
   font-size: 0.75rem;
   font-weight: bold;
   background: rgba(56, 245, 56, 0.08);
-  box-shadow: 0 0 5px rgba(56, 245, 56, 0.3);
+  box-shadow: 0 0 6px rgba(56, 245, 56, 0.4);
 }
 
 .crt-status-msg {
@@ -725,7 +942,7 @@ body, html {
 }
 
 .player-bezel {
-  width: 310px;
+  width: 320px;
 }
 
 .desk-keypads {
@@ -747,6 +964,7 @@ body, html {
   color: var(--rust-crt-green);
   background: #000;
   padding: 2px 4px;
+  text-shadow: 0 0 4px var(--rust-crt-green);
 }
 
 .btn-row {
@@ -763,7 +981,7 @@ body, html {
   border-bottom: 2px solid #1a1714;
 }
 
-/* --- Physical Cards Display & Weathered Paper Styling --- */
+/* --- Physical Cards Display & Weathered Worn Paper Styling --- */
 .physical-cards-area {
   position: absolute;
   display: flex;
@@ -782,7 +1000,7 @@ body, html {
   transform: translateX(-50%);
 }
 
-/* Playing Card Component with Dirt / Wear Texture */
+/* Playing Card Component with Weathered Worn Paper Filters & Bent Corners */
 .rust-card {
   width: var(--card-width);
   height: var(--card-height);
@@ -797,7 +1015,7 @@ body, html {
   padding: 6px;
   transition: transform 0.3s ease, box-shadow 0.3s;
   animation: dealCard 0.35s ease-out;
-  filter: contrast(0.97) sepia(0.12);
+  filter: contrast(0.97) sepia(0.14);
 }
 
 @keyframes dealCard {
@@ -819,16 +1037,28 @@ body, html {
   color: #1a1918;
 }
 
-/* Wear / Dirt Overlay on Card */
+/* Wear / Dirt & Dog-eared Bent Corner Overlay */
 .rust-card::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 6px;
   background:
-    radial-gradient(circle at 12% 18%, rgba(100, 75, 40, 0.12) 0%, transparent 45%),
-    radial-gradient(circle at 88% 82%, rgba(70, 50, 25, 0.16) 0%, transparent 50%),
-    repeating-linear-gradient(45deg, transparent 0, transparent 8px, rgba(0,0,0,0.025) 9px);
+    radial-gradient(circle at 12% 18%, rgba(100, 75, 40, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 88% 82%, rgba(70, 50, 25, 0.18) 0%, transparent 50%),
+    repeating-linear-gradient(45deg, transparent 0, transparent 8px, rgba(0,0,0,0.03) 9px);
+  pointer-events: none;
+}
+
+/* Corner Wear Crease */
+.rust-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.15) 50%);
   pointer-events: none;
 }
 
@@ -961,10 +1191,10 @@ body, html {
   font-weight: bold;
 }
 
-/* --- Action & Betting Panel (Rust Dark Rectangular Buttons) --- */
+/* --- Action & Betting Panel (Tactile Rust Switches with Glowing Hovers) --- */
 .control-panel {
   width: 100%;
-  max-width: 600px;
+  max-width: 620px;
   background: rgba(20, 16, 13, 0.96);
   border: 1px solid var(--rust-border);
   padding: 12px 18px;
@@ -986,9 +1216,12 @@ body, html {
   flex-wrap: wrap;
 }
 
-.chip-btn {
-  background: rgba(38, 32, 26, 0.85);
+/* Rust Tactile Switches for Betting & Actions */
+.rust-tactile-switch {
+  position: relative;
+  background: linear-gradient(180deg, #322b24 0%, #1f1915 100%);
   border: 1px solid #4a3e35;
+  border-bottom: 3px solid #14100d;
   color: #dcd2c8;
   font-weight: bold;
   font-family: var(--font-mono);
@@ -997,26 +1230,39 @@ body, html {
   border-radius: 2px;
   cursor: pointer;
   transition: all 0.15s;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.chip-btn:hover {
-  background: rgba(65, 54, 44, 0.95);
+.rust-tactile-switch:hover {
+  background: linear-gradient(180deg, #423830 0%, #2b231d 100%);
   color: #fff;
   border-color: var(--rust-accent-red);
-  box-shadow: 0 0 8px rgba(205, 65, 43, 0.4);
+  box-shadow: 0 0 10px rgba(205, 65, 43, 0.4);
+}
+
+.rust-tactile-switch:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
 }
 
 .chip-btn.max-btn {
-  background: rgba(74, 31, 24, 0.9);
+  background: linear-gradient(180deg, #5c271e 0%, #3d1711 100%);
   border-color: #822e20;
   color: #ff9d8c;
 }
 
 .chip-btn.clear-btn {
-  background: rgba(35, 30, 26, 0.9);
+  background: linear-gradient(180deg, #2b2520 0%, #191512 100%);
   border-color: #3b332d;
   color: #999;
+}
+
+.btn-icon-svg {
+  width: 14px;
+  height: 14px;
 }
 
 .action-buttons {
@@ -1113,5 +1359,5 @@ body, html {
   .player-bezel { width: 250px; }
   .rust-hud-panel { left: 10px; top: 10px; }
   .dealer-score-badge-container { left: 210px; top: 10px; }
-  .rust-survival-hud { display: none; }
+  .rust-survival-hud, .terminal-wiring, .storage-game-hud { display: none; }
 }
